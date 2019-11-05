@@ -1,6 +1,7 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import {reposQuery} from "./queries"
+import DisplayRepos from "./DisplayRepos"
 
 const MyRepositories = () => {
   const handleMore = (current, fetchMore, data) => {
@@ -21,18 +22,11 @@ const MyRepositories = () => {
           if (error) return <p>{error.message}</p>
           let current = data.viewer.repositories.edges.length
           return(
-                <div>
-                  <ul>
-                    <h2>First {current} repositories</h2>
-                    {data.viewer.repositories.edges.map(({node},index) => {
-                      return(
-                          <li key={index}>{node.name}</li>
-                      )
-                    })
-                    }
-                  </ul>
-                  <button onClick={()=>handleMore(current, fetchMore, data)}>Fetch More</button>
-                </div>
+              <DisplayRepos
+                current={current}
+                data={data}
+                handleMore={()=>handleMore(current, fetchMore, data)}
+              />
             )
           }
         }
