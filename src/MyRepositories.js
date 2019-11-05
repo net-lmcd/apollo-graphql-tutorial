@@ -1,20 +1,6 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
-
-const reposQuery = gql`
- query MyRepositories($first : Int!){
-   viewer{
-    repositories(first : $first){
-      edges{
-        node {
-          name
-        }
-      }
-    }
-  }
- }
-`
+import {reposQuery} from "./queries"
 
 const MyRepositories = () => {
   const handleMore = (current, fetchMore, data) => {
