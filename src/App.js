@@ -1,24 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Query } from 'react-apollo'
+import { gql } from 'apollo-boost'
+
+const query = gql`
+  {
+    viewer {
+      name
+      email
+    } 
+  }
+`
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Query query={query}>
+        {result => {
+          if (result.loading) return <p>loading...</p>;
+          if (result.error) return <p>{result.error.message}</p>;
+          return(
+              <div>
+                <h1> name : {result.data.viewer.name}</h1>
+                <p>  Email : {result.data.viewer.email}</p>
+              </div>
+          )
+        }}
+      </Query>
     </div>
   );
 }
