@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
+import MyRepositores from './Myrepositories'
 
 const query = gql`
   {
@@ -27,6 +28,7 @@ function App() {
           )
         }}
       </Query>
+      <MyRepositores/>
     </div>
   );
 }
