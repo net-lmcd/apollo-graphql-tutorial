@@ -6,7 +6,12 @@ const reposQuery = gql`
     repositories(first : $first){
       edges{
         node {
+          id
           name
+          stargazers{
+          totalCount
+          }
+          viewerHasStarred
         }
       }
     }
@@ -23,4 +28,30 @@ const userQuery = gql`
   }
 `
 
-export { reposQuery, userQuery}
+const addStarquery = gql`
+  mutation AddStar($repoId: ID!) {
+    addStar(input: { starrableId: $repoId }) {
+      starrable {
+        stargazers {
+          totalCount
+        }
+        viewerHasStarred
+      }
+    }
+  }
+`;
+
+const removeStarquery = gql`
+  mutation RemoveStar($repoId : ID!){
+    removeStar(input: {starrableId : $repoId}){
+      starrable{
+        stargazers{
+          totalCount
+        }
+        viewerHasStarred
+      }
+    }
+  }
+`
+
+export { reposQuery, userQuery, addStarquery, removeStarquery}
